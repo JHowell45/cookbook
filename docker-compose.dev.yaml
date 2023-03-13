@@ -17,6 +17,7 @@ services:
       dockerfile: Dockerfile.dev
     volumes:
       - ./backend:/usr/src/app
+      - django-static:/backend/static
     expose:
       - 8000
     ports: 
@@ -48,7 +49,7 @@ services:
     image: nginx:alpine
     container_name: nginx
     ports:
-      - "8000:80"
+      - "5566:80"
     depends_on:
       - backend
     volumes:
@@ -59,3 +60,5 @@ services:
 networks:
   cookbook:
     driver: bridge
+volumes:
+  django-static:
