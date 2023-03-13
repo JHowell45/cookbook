@@ -1,12 +1,15 @@
 version: '3.7'
 
 services:
-  app:
+  backend:
+    restart: always
     build:
       context: ./backend
       dockerfile: Dockerfile.dev
     volumes:
-      - ./backend:/app
+      - ./backend:/usr/src/app
+    expose:
+      - 8000
     ports: 
-      - '9000:8000'
-    command: "poetry run python manage.py runserver"
+      - 9000:8000
+    command: python manage.py runserver 0.0.0.0:8000
