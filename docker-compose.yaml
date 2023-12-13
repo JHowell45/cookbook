@@ -1,0 +1,11 @@
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    expose:
+      - 8000
+    ports:
+      - '8000:8000'
+    command: manage.py runserver 0.0.0.0:8000
