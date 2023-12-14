@@ -1,0 +1,40 @@
+version: '3'
+services:
+  web:
+    container_name: cookbook-app
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    expose:
+      - 8000
+    ports:
+      - '8000:8000'
+    volumes:
+      - './cookbook:/app'
+    restart: always
+    command: 'manage.py runserver 0.0.0.0:8000'
+    depends_on:
+      db:
+        condition: service_healthy
+  
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: example
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: cookbook_db
+    volumes:
+      - './local_db/postgres/data:/var/lib/postgresql/data'
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 2s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - '8080:8080'
