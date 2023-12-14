@@ -19,6 +19,7 @@ services:
     environment:
       POSTGRES_USER: example
       POSTGRES_PASSWORD: example
+      POSTGRES_DB: cookbook_db
     volumes:
       - './local_db/postgres/data:/var/lib/postgresql/data'
   adminer:
